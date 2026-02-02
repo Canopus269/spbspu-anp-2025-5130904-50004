@@ -4,7 +4,7 @@
 namespace
 {
 
-static void markLatinLetters(const char* s, unsigned char present[26]) noexcept
+void markLatinLetters(const char* s, unsigned char present[26]) noexcept
 {
   if (s == nullptr) {
     return;
