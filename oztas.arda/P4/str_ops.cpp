@@ -1,34 +1,39 @@
 #include "str_ops.hpp"
 #include <cctype>
 
-namespace {
+namespace
+{
 
-  void markLatinLetters(
-    const char* s,
-    unsigned char present[26]
-  ) noexcept
-  {
-    size_t i = 0;
-    while (s[i] != '\0') {
-      const unsigned char c = static_cast<unsigned char>(s[i]);
-      if (std::isalpha(c) != 0) {
-        const int lc = std::tolower(c);
-        if (lc >= 'a' && lc <= 'z') {
-          present[static_cast<size_t>(lc - 'a')] = 1;
-        }
-      }
-      ++i;
-    }
+static void markLatinLetters(const char* s, unsigned char present[26]) noexcept
+{
+  if (s == nullptr) {
+    return;
   }
+
+  size_t i = 0;
+  while (s[i] != '\0') {
+    const unsigned char uc = static_cast<unsigned char>(s[i]);
+    if (std::isalpha(uc) != 0) {
+      const unsigned char lc =
+        static_cast<unsigned char>(std::tolower(uc));
+      if ((lc >= static_cast<unsigned char>('a')) &&
+          (lc <= static_cast<unsigned char>('z'))) {
+        present[static_cast<size_t>(lc - static_cast<unsigned char>('a'))] = 1;
+      }
+    }
+    ++i;
+  }
+}
 
 }
 
 size_t oztas::cstrLen(const char* s) noexcept
 {
-  size_t n = 0;
   if (s == nullptr) {
     return 0;
   }
+
+  size_t n = 0;
   while (s[n] != '\0') {
     ++n;
   }
@@ -55,11 +60,11 @@ size_t oztas::replaceSymbol(
     const char c = src[i];
     if (c == from) {
       dst[i] = to;
-    }
-    else {
+    } else {
       dst[i] = c;
     }
   }
+
   dst[n] = '\0';
   return n;
 }
@@ -71,14 +76,10 @@ size_t oztas::latinTwo(
   size_t dstSize
 ) noexcept
 {
-  unsigned char present[26] = { 0 };
+  unsigned char present[26] = {0};
 
-  if (s1 != nullptr) {
-    markLatinLetters(s1, present);
-  }
-  if (s2 != nullptr) {
-    markLatinLetters(s2, present);
-  }
+  markLatinLetters(s1, present);
+  markLatinLetters(s2, present);
 
   size_t need = 0;
   for (size_t i = 0; i < 26; ++i) {
@@ -94,10 +95,11 @@ size_t oztas::latinTwo(
   size_t pos = 0;
   for (size_t i = 0; i < 26; ++i) {
     if (present[i] != 0) {
-      dst[pos] = static_cast<char>('a' + static_cast<char>(i));
+      dst[pos] = static_cast<char>('a' + i);
       ++pos;
     }
   }
+
   dst[pos] = '\0';
   return need;
 }
