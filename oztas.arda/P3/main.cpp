@@ -52,22 +52,16 @@ int main(int argc, char* argv[])
     return 2;
   }
 
+  if (rows == 0 || cols == 0)
+  {
+    output << "0 0";
+    return 0;
+  }
+
   if (taskNum == 1)
   {
-    constexpr size_t MAX = 256;
-    if (rows > MAX || cols > MAX)
-    {
-      std::cerr << "invalid matrix data\n";
-      return 2;
-    }
-
-    int matrix[MAX * MAX];
-
-    if (rows == 0 || cols == 0)
-    {
-      output << "0 0";
-      return 0;
-    }
+    constexpr size_t MAX = 10000;
+    int matrix[MAX];
 
     if (!oztas::readMatrix(input, matrix, rows, cols))
     {
@@ -80,12 +74,6 @@ int main(int argc, char* argv[])
   }
   else
   {
-    if (rows == 0 || cols == 0)
-    {
-      output << "0 0";
-      return 0;
-    }
-
     int* matrix = new (std::nothrow) int[rows * cols];
     if (!matrix)
     {
