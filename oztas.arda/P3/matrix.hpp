@@ -1,5 +1,5 @@
-#ifndef OZTAS_T3_MATRIX_HPP
-#define OZTAS_T3_MATRIX_HPP
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 
 #include <iosfwd>
 #include <cstddef>
